@@ -1,0 +1,683 @@
+<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>יחסים בצעדים | יחס, פרופורציה וקנה מידה - כיתה ח׳</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800&family=Secular+One&display=swap');
+:root{--bg:#f3f7f5;--paper:#fff;--ink:#17302e;--muted:#617371;--teal:#087f78;--teal2:#dff4ef;--yellow:#f4c95d;--orange:#e87d41;--green:#278c63;--red:#c44f4f;--line:#d8e4e0;--shadow:0 14px 40px rgba(20,67,63,.12)}
+[data-theme=dark]{--bg:#10211f;--paper:#17302e;--ink:#f2f7f5;--muted:#b2c5c0;--teal:#55c8bd;--teal2:#214b46;--line:#31534f;--shadow:0 14px 40px rgba(0,0,0,.28)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Heebo,Arial,sans-serif}
+.wrap{width:min(1080px,calc(100% - 36px));margin:auto}
+.top{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px}.brand b,h1,h2,h3{font-family:'Secular One';font-weight:400}
+.logo{width:44px;height:44px;border-radius:14px;background:var(--teal);color:#fff;display:grid;place-items:center;font-size:22px;font-weight:800;direction:ltr}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+button,.btn{font:inherit;cursor:pointer}.btn{border:0;border-radius:12px;padding:10px 16px;background:var(--teal);color:#fff;font-weight:800;text-decoration:none;display:inline-block}
+.ghost{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+.hero{padding:42px 0 20px}.hero h1{font-size:clamp(38px,6vw,66px);line-height:1;margin:0 0 12px}.hero h1 span{color:var(--teal)}.hero p{font-size:19px;color:var(--muted);max-width:640px;line-height:1.7}
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0 30px}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:16px}.stat b{font-size:24px;color:var(--teal);display:block}.stat span{color:var(--muted);font-size:14px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 5px 18px rgba(20,67,63,.05)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:18px 0 60px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:20px;display:flex;flex-direction:column;min-height:190px}
+.card .icon{font-size:30px}.card h3{font-size:21px;margin:8px 0 4px}.card p{color:var(--muted);margin:0 0 14px;font-size:15px;line-height:1.6}
+.card .btn{margin-top:auto;align-self:flex-start}
+.badge{display:inline-block;font-size:12px;font-weight:800;border-radius:20px;padding:3px 10px;margin-inline-start:8px;vertical-align:middle}
+.b-new{background:var(--teal2);color:var(--teal)}.b-weak{background:#c44f4f22;color:var(--red)}.b-mid{background:#f4c95d33;color:#9a7a1e}.b-ok{background:#278c6322;color:var(--green)}
+[data-theme=dark] .b-mid{color:var(--yellow)}
+.bar{height:9px;background:var(--line);border-radius:20px;overflow:hidden;margin:10px 0}.bar i{display:block;height:100%;background:var(--teal);transition:width .4s}
+.view{display:none}.view.active{display:block}
+.reco{border:1px solid var(--line);border-inline-start:6px solid var(--orange);border-radius:16px;padding:16px 18px;background:var(--paper);margin:14px 0;line-height:1.8}
+.quiz-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.question{font-size:21px;font-weight:800;margin:14px 0;line-height:1.7}
+.qfig{margin:10px auto;display:block;max-width:100%}
+.options{display:grid;gap:9px;margin:10px 0}
+.answer{border:1px solid var(--line);background:var(--paper);color:var(--ink);text-align:right;padding:13px 15px;border-radius:13px;font-size:17px}
+.answer:hover{border-color:var(--teal)}
+.answer.correct{border-color:var(--green);background:#278c6322}
+.answer.wrong{border-color:var(--red);background:#c44f4f22}
+.answer:disabled{cursor:default}
+.feedback,.hintbox{display:none;padding:14px;border-radius:13px;margin-top:10px;line-height:1.8}
+.feedback.show,.hintbox.show{display:block}
+.feedback{background:var(--teal2)}
+.hintbox{background:#f4c95d2b;border-inline-start:4px solid var(--yellow)}
+.math{direction:ltr;unicode-bidi:isolate;display:inline-block;font-weight:800}
+dialog{width:min(1000px,calc(100% - 24px));height:min(820px,calc(100dvh - 24px));padding:0;border:1px solid var(--line);border-radius:26px;background:var(--paper);color:var(--ink);box-shadow:0 30px 90px #0005}
+dialog::backdrop{background:#08141694}
+.modal-head{position:sticky;top:0;z-index:3;background:var(--paper);border-bottom:1px solid var(--line);padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.modal-head b{font:22px 'Secular One'}
+.close{border:1px solid var(--line);background:transparent;color:var(--ink);width:40px;height:40px;border-radius:50%;font-size:22px}
+.tabs{display:flex;gap:6px;padding:12px 20px 0;position:sticky;top:72px;z-index:2;background:var(--paper);flex-wrap:wrap}
+.tab{border:0;background:transparent;color:var(--muted);padding:10px 16px;border-bottom:3px solid transparent;font-weight:800}
+.tab.active{color:var(--teal);border-color:var(--teal)}
+.modal-body{padding:20px}
+.pane{display:none}.pane.active{display:block}
+.learn-grid,.lab-grid{display:grid;grid-template-columns:1fr .95fr;gap:18px}
+.concept{font-size:17px;line-height:1.85}
+.example{background:var(--teal2);border-radius:15px;padding:16px;margin-top:12px}
+.step{display:none;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,var(--paper) 70%,transparent);margin-top:8px;line-height:1.8}
+.step.show{display:block}
+.trap{background:#c44f4f14;border-inline-start:4px solid var(--red);border-radius:10px;padding:12px 14px;margin-top:12px;line-height:1.8}
+.stage{min-height:300px;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:12px;display:grid;place-items:center;overflow:hidden}
+.stage svg{width:100%;height:auto;max-height:340px;touch-action:none}
+.controls{display:grid;align-content:start;gap:14px}
+.range{display:grid;gap:4px}.range input{width:100%;accent-color:var(--teal)}
+.readout{background:var(--teal2);border-radius:14px;padding:14px;font-size:17px;line-height:1.9}
+.num-input{padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);font-size:17px;width:120px;text-align:center}
+.footer{padding:24px 0;color:var(--muted);border-top:1px solid var(--line);font-size:14px}
+.sumrow{display:grid;grid-template-columns:150px 1fr 110px;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+@media(max-width:850px){.learn-grid,.lab-grid{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.strip{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.wrap{width:min(100% - 22px,1080px)}.grid{grid-template-columns:1fr}.modal-body{padding:14px}.sumrow{grid-template-columns:110px 1fr 90px;font-size:14px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style></head><body>
+<header class="wrap top">
+  <div class="brand"><div class="logo">a:b</div><b>יחסים בצעדים</b></div>
+  <div class="actions">
+    <button class="btn ghost" id="navHome">בית</button>
+    <button class="btn ghost" id="navMap">מפת הלמידה</button>
+    <button class="btn ghost" id="navSummary">הסיכום שלי</button>
+    <button class="btn ghost" id="themeBtn" aria-label="מצב כהה">◐</button>
+  </div>
+</header>
+<main class="wrap">
+  <!-- HOME -->
+  <section class="view active" id="view-home">
+    <div class="hero">
+      <h1>יחס, פרופורציה <span>וקנה מידה</span></h1>
+      <p>מסלול לימוד אישי ואינטראקטיבי לכיתה ח׳. מתחילים באבחון קצר שמגלה בדיוק איפה חזק ואיפה מתקשים, ואז לומדים צעד-אחר-צעד רק את מה שצריך - עם דוגמאות פתורות, מעבדות שאפשר לשחק איתן, ותרגול בסגנון דף העבודה.</p>
+      <div class="actions" style="margin-top:18px">
+        <button class="btn" id="startDiag">מתחילים באבחון הקצר (6 שאלות)</button>
+        <button class="btn ghost" id="skipDiag">דילוג - ישר למפת הלמידה</button>
+      </div>
+    </div>
+    <div class="strip" id="homeStats"></div>
+    <div class="panel" style="margin-bottom:50px">
+      <h3 style="margin-top:0">איך זה עובד?</h3>
+      <div class="concept">
+        <b>1.</b> אבחון של 6 שאלות ממפה את החוזקות והחולשות.<br>
+        <b>2.</b> המסלול האישי מסדר את הנושאים לפי מה שכדאי ללמוד קודם.<br>
+        <b>3.</b> בכל נושא: הסבר קצר, דוגמה פתורה צעד-אחר-צעד, מעבדה אינטראקטיבית ותרגול עם רמזים והסברים.<br>
+        <b>4.</b> הסיכום מראה בדיוק איפה כדאי להשקיע את הזמן - ואפשר להציג או לייצא אותו.
+      </div>
+    </div>
+  </section>
+  <!-- DIAGNOSTIC -->
+  <section class="view" id="view-diag">
+    <div class="panel" style="margin:26px 0 60px">
+      <div class="quiz-head"><h2 style="margin:0">אבחון קצר</h2><span id="diagProgress" style="color:var(--muted)"></span></div>
+      <p style="color:var(--muted);margin-top:6px">עני בכוחות עצמך - טעות כאן היא לא ציון, אלא מפה: היא אומרת לנו איפה להשקיע את הזמן.</p>
+      <div id="diagBody"></div>
+    </div>
+  </section>
+  <!-- MAP -->
+  <section class="view" id="view-map">
+    <h2 style="margin:26px 0 4px">מפת הלמידה</h2>
+    <p style="color:var(--muted);margin-top:4px">הנושאים מסודרים לפי הסדר המומלץ עבורך. בכל נושא: לומדים, משחקים במעבדה ומתרגלים.</p>
+    <div id="recoBox"></div>
+    <div class="grid" id="mapGrid"></div>
+    <div class="panel" style="margin-bottom:60px" id="worksheetCard">
+      <h3 style="margin-top:0">מתרגלים כמו בדף העבודה</h3>
+      <p style="color:var(--muted)">שאלות מאותם סוגים שמופיעים בדף העבודה לסוכות: שטחי משולשים בתוך מלבנים, כדורים בכדים, זוויות ביחס נתון ומלבן עם שטח ויחס צלעות.</p>
+      <button class="btn" id="openWorksheet">פתיחת התרגול (7 שאלות)</button>
+    </div>
+  </section>
+  <!-- SUMMARY -->
+  <section class="view" id="view-summary">
+    <h2 style="margin:26px 0 4px">הסיכום שלי</h2>
+    <p style="color:var(--muted);margin-top:4px">תמונת המצב שלך בכל מיומנות - ואיפה הכי כדאי להשקיע עכשיו.</p>
+    <div id="summaryBody" class="panel" style="margin:14px 0 20px"></div>
+    <div class="actions" style="margin-bottom:60px">
+      <button class="btn ghost" id="exportBtn">ייצוא ההתקדמות לקובץ</button>
+      <button class="btn ghost" id="importBtn">ייבוא מקובץ</button>
+      <input type="file" id="importFile" accept="application/json" hidden>
+      <button class="btn ghost" id="resetBtn">איפוס הכל</button>
+    </div>
+  </section>
+</main>
+<footer class="footer"><div class="wrap">יחסים בצעדים • יחס, פרופורציה וקנה מידה לכיתה ח׳ • ההתקדמות נשמרת במכשיר בלבד</div></footer>
+<!-- SECTION MODAL -->
+<dialog id="secDialog">
+  <div class="modal-head"><b id="secTitle"></b><button class="close" id="secClose" aria-label="סגירה">×</button></div>
+  <div class="tabs">
+    <button class="tab active" data-tab="learn">לומדים</button>
+    <button class="tab" data-tab="lab">המעבדה</button>
+    <button class="tab" data-tab="practice">מתרגלים</button>
+  </div>
+  <div class="modal-body">
+    <div class="pane active" id="pane-learn"></div>
+    <div class="pane" id="pane-lab"></div>
+    <div class="pane" id="pane-practice"></div>
+  </div>
+</dialog>
+<!-- WORKSHEET MODAL -->
+<dialog id="wsDialog">
+  <div class="modal-head"><b>מתרגלים כמו בדף העבודה</b><button class="close" id="wsClose" aria-label="סגירה">×</button></div>
+  <div class="modal-body" id="wsBody"></div>
+</dialog>
+<script>
+'use strict';
+/* ============ DATA ============ */
+const SKILLS = {
+  simplify:{name:'יחס וצמצום', icon:'✂'},
+  equiv:{name:'יחסים שקולים', icon:'⚖'},
+  prop:{name:'פרופורציה ושיעור יחידה', icon:'∷'},
+  part:{name:'חלק מתוך שלם', icon:'◔'},
+  scale:{name:'קנה מידה', icon:'🗺'},
+  geo:{name:'יחסים בגאומטריה', icon:'△'}
+};
+const ORDER = ['simplify','equiv','prop','part','scale','geo'];
+function frac(a,b){return '<span class="math">'+a+'/'+b+'</span>';}
+const SECTIONS = [
+{ id:'simplify',
+  title:'יחס וצמצום',
+  desc:'מהו יחס, איך כותבים אותו, ואיך מצמצמים אותו עד הסוף - בדיוק כמו שבר.',
+  concept:`<p><b>יחס</b> משווה בין שני גדלים באותו סדר. כותבים אותו עם נקודתיים, למשל <span class="math">18:24</span>, וקוראים "היחס בין 18 ל-24".</p>
+  <p>יחס מתנהג בדיוק כמו שבר: אפשר <b>לכפול או לחלק את שני האיברים באותו מספר</b> והיחס לא משתנה. לכן אפשר לצמצם: מחלקים את שני הצדדים במחלק המשותף הגדול ביותר.</p>
+  <p>שימי לב לסדר: "היחס בין אדומים לכחולים" הוא אדומים:כחולים. הפיכת הסדר משנה את היחס.</p>`,
+  example:{title:'דוגמה פתורה: מצמצמים 18:24', steps:[
+    'מחפשים מספר שמחלק את שני האיברים. גם 18 וגם 24 מתחלקים ב-2: מקבלים <span class="math">9:12</span>.',
+    'האם סיימנו? עדיין לא - גם 9 וגם 12 מתחלקים ב-3: מקבלים <span class="math">3:4</span>.',
+    'ל-3 ול-4 אין מחלק משותף מלבד 1, ולכן <b>3:4 הוא היחס המצומצם</b>. קיצור דרך: מחלקים ישר ב-6 (המחלק המשותף הגדול ביותר).'
+  ]},
+  trap:'צמצום חלקי הוא הטעות הכי נפוצה: 18:24 → 9:12 הוא יחס שקול, אבל לא מצומצם. תמיד בודקים אם אפשר להמשיך לחלק.',
+  practice:[
+   {q:'צמצמו את היחס <span class="math">24:36</span> עד הסוף.',options:['<span class="math">2:3</span>','<span class="math">3:4</span>','<span class="math">4:6</span>','<span class="math">8:12</span>'],correct:0,
+    hints:['באיזה מספר מתחלקים גם 24 וגם 36? נסו 12.','24 חלקי 12 זה 2, ו-36 חלקי 12 זה...'],
+    explain:'<span class="math">24:36</span> - מחלקים את שני האיברים ב-12 ומקבלים <span class="math">2:3</span>.',trap:'4:6 ו-8:12 הם יחסים שקולים, אבל אפשר להמשיך לצמצם אותם - ולכן הם לא התשובה הסופית.'},
+   {q:'צמצמו את היחס <span class="math">45:60</span>.',options:['<span class="math">3:4</span>','<span class="math">9:12</span>','<span class="math">5:6</span>','<span class="math">15:20</span>'],correct:0,
+    hints:['גם 45 וגם 60 מתחלקים ב-15.','45 חלקי 15 זה 3.'],
+    explain:'המחלק המשותף הגדול ביותר של 45 ו-60 הוא 15, ולכן <span class="math">45:60 = 3:4</span>.',trap:'9:12, 15:20 ו-3:4 כולם שקולים ל-45:60, אבל רק 3:4 מצומצם עד הסוף.'},
+   {q:'בשקית 18 כדורים אדומים ו-12 כחולים. מה היחס המצומצם בין אדומים לכחולים?',options:['<span class="math">3:2</span>','<span class="math">2:3</span>','<span class="math">6:4</span>','<span class="math">4:6</span>'],correct:0,
+    hints:['קודם כותבים 18:12 לפי הסדר שביקשו: אדומים קודם.','מחלקים את שני הצדדים ב-6.'],
+    explain:'אדומים:כחולים = <span class="math">18:12</span>, מחלקים ב-6 ומקבלים <span class="math">3:2</span>.',trap:'2:3 הוא היחס ההפוך (כחולים:אדומים) - הסדר ביחס משנה.'}
+  ]},
+{ id:'equiv',
+  title:'יחסים שקולים והשלמות',
+  desc:'איך ממצאים איבר חסר ביחס שקול, ולמה חיבור אותו מספר לשני הצדדים דווקא לא שומר על היחס.',
+  concept:`<p>שני יחסים <b>שקולים</b> אם אפשר לעבור מאחד לשני על ידי <b>כפל או חילוק של שני האיברים באותו מספר</b>. למשל <span class="math">3:5 = 6:10 = 30:50</span>.</p>
+  <p>בשאלות השלמה כמו <span class="math">4:7 = 12:?</span> שואלים: "בכמה הכפלנו את האיבר הראשון?" - ומכפילים את השני באותו מספר: 12 זה 4 כפול 3, ולכן החסר הוא 7 כפול 3 = <b>21</b>.</p>
+  <p><b>זהירות:</b> הוספת אותו מספר לשני האיברים <u>לא</u> שומרת על היחס. <span class="math">3:8</span> עם תוספת 3 הופך ל-<span class="math">6:11</span>, ואלה יחסים שונים.</p>`,
+  example:{title:'דוגמה פתורה: 5:9 = 20:?', steps:[
+    'בודקים מה קרה לאיבר הראשון: 5 הפך ל-20, כלומר הוכפל פי 4.',
+    'אותו כפל חייב לקרות גם לאיבר השני: 9 כפול 4 = 36.',
+    'התשובה: <b><span class="math">5:9 = 20:36</span></b>. בדיקה: 20/36 מצטמצם ל-5/9.'
+  ]},
+  trap:'המלכודת הקלאסית: לראות "5 הפך ל-20" כתוספת 15 ולחבר 15 גם ל-9. יחס נשמר רק בכפל ובחילוק, לא בחיבור ובחיסור.',
+  practice:[
+   {q:'השלימו יחס שקול: <span class="math">4:7 = 12:?</span>',options:['<span class="math">21</span>','<span class="math">14</span>','<span class="math">24</span>','<span class="math">16</span>'],correct:0,
+    hints:['בכמה הוכפל ה-4 כדי להפוך ל-12?','מכפילים גם את ה-7 באותו מספר.'],
+    explain:'12 זה 4 כפול 3, ולכן האיבר החסר הוא 7 כפול 3 = <b>21</b>.',trap:'מי שענה 19 (לא קיים כאן) או 15 חיבר במקום להכפיל - יחס נשמר רק בכפל.'},
+   {q:'השלימו: <span class="math">?:8 = 9:24</span>',options:['<span class="math">3</span>','<span class="math">6</span>','<span class="math">4</span>','<span class="math">12</span>'],correct:0,
+    hints:['מסתכלים על האיברים השניים: מ-24 ל-8 מחלקים בכמה?','24 חלקי 8 זה 3, ולכן מחלקים גם את 9 ב-3.'],
+    explain:'מ-24 ל-8 מחלקים ב-3, ולכן גם 9 מחלקים ב-3: <b>3</b>. בדיקה: 3/8 ו-9/24 הם אותו שבר.',trap:'מי שמחפש "כמה חסר מ-9 ל-24" מחבר ומחסר - ויחס לא עובד ככה.'},
+   {q:'היחס בין שני מספרים הוא <span class="math">3:8</span>. הוסיפו 3 לכל אחד מהם והתקבל <span class="math">6:11</span>. האם היחס נשמר?',options:['לא - יחס נשמר רק בכפל או חילוק באותו מספר','כן - הוספנו אותו מספר לשני הצדדים','כן - כי 6:11 גדול מ-3:8','אי אפשר לדעת בלי לדעת מה המספרים'],correct:0,
+    hints:['בדקו אם 3/8 ו-6/11 הם אותו שבר.','3/8 זה 0.375. כמה זה 6/11?'],
+    explain:'3/8 ≈ 0.375 ואילו 6/11 ≈ 0.545 - שברים שונים, היחס השתנה. חיבור אותו מספר לשני האיברים אינו שומר על היחס; רק כפל או חילוק שומרים.',trap:'זו אחת הטעויות הנפוצות בכיתה ח׳ - "אותו דבר לשני הצדדים" נכון למשוואות, לא ליחסים.'}
+  ]},
+{ id:'prop',
+  title:'פרופורציה ושיעור יחידה',
+  desc:'כששני יחסים שווים - איך פותרים עם כפל בהצלבה, ואיך שיעור יחידה הופך בעיות למשפט אחד.',
+  concept:`<p><b>פרופורציה</b> היא שוויון בין שני יחסים: <span class="math">x/8 = 9/24</span>. הכלי המרכזי הוא <b>כפל בהצלבה</b>: <span class="math">24x = 8·9</span>, ומשם מחלקים.</p>
+  <p><b>שיעור יחידה</b> אומר: קודם מוצאים כמה זה עבור <b>אחד</b>. אם 5 מחברות עולות 40 ₪, מחברת אחת עולה 8 ₪, ואז 8 מחברות עולות 64 ₪.</p>
+  <p>שתי הגישות הן אותו רעיון: היחס נשאר קבוע, ואנחנו עוברים דרך היחידה או דרך ההצלבה.</p>`,
+  example:{title:'דוגמה פתורה: 5 מחברות ב-40 ₪, כמה עולות 8?', steps:[
+    'דרך שיעור יחידה: מחברת אחת עולה 40 חלקי 5 = 8 ₪.',
+    'עכשיו כופלים: 8 מחברות כפול 8 ₪ = 64 ₪.',
+    'בדיקה בפרופורציה: <span class="math">x/8 = 40/5</span>, כפל בהצלבה: <span class="math">5x = 320</span>, ולכן <b>x = 64</b>. אותה תשובה.'
+  ]},
+  trap:'לא כל בעיה היא פרופורציה! אם נוסף מספר קבוע (למשל דמי משלוח קבועים), היחס כבר לא קבוע. בודקים: האם כשהכמות 0 גם המחיר 0?',
+  practice:[
+   {q:'פתרו את הפרופורציה: <span class="math">x/6 = 10/15</span>',options:['<span class="math">x = 4</span>','<span class="math">x = 9</span>','<span class="math">x = 5</span>','<span class="math">x = 6</span>'],correct:0,
+    hints:['כופלים בהצלבה: 15x = 6·10.','6·10 = 60, ועכשיו מחלקים ב-15.'],
+    explain:'כפל בהצלבה: <span class="math">15x = 60</span>, מחלקים ב-15: <b>x = 4</b>. בדיקה: 4/6 = 10/15 = 2/3.',trap:'מי שענה 9 עשה 15-6 - שוב חיבור וחיסור במקום כפל.'},
+   {q:'5 מחברות עולות 40 ₪. כמה עולות 8 מחברות באותו מחיר?',options:['<span class="math">64 ₪</span>','<span class="math">56 ₪</span>','<span class="math">72 ₪</span>','<span class="math">45 ₪</span>'],correct:0,
+    hints:['קודם מוצאים מחיר של מחברת אחת.','40 חלקי 5 זה 8 - וזה המחיר לאחת. עכשיו כפול 8 מחברות.'],
+    explain:'שיעור יחידה: מחברת אחת = 8 ₪. שמונה מחברות = <b>64 ₪</b>.',trap:'45 ₪ זה 40+5 - חיבור המספרים שבשאלה במקום שימוש ביחס הקבוע.'},
+   {q:'מכונית נוסעת 180 ק״מ בשעתיים. כמה ק״מ היא תעבור ב-5 שעות באותה מהירות?',options:['<span class="math">450</span>','<span class="math">360</span>','<span class="math">540</span>','<span class="math">400</span>'],correct:0,
+    hints:['כמה ק״מ בשעה אחת?','90 ק״מ לשעה, כפול 5 שעות.'],
+    explain:'שיעור יחידה: 180 חלקי 2 = 90 ק״מ לשעה. ב-5 שעות: 90·5 = <b>450 ק״מ</b>.',trap:'360 זה "פעמיים 180" - אבל 5 שעות זה לא פעמיים שעתיים.'}
+  ]},
+{ id:'part',
+  title:'חלק מתוך שלם',
+  desc:'מיחס לשבר וחזרה: כמה מהשלם תופס כל חלק, ואיך מחלקים כמות ביחס נתון - כולל כדורים בכדים.',
+  concept:`<p>יחס <span class="math">3:2</span> אומר שהשלם מחולק ל-3+2 = <b>5 חלקים שווים</b>. החלק הראשון הוא <span class="math">3/5</span> מהשלם והשני <span class="math">2/5</span>.</p>
+  <p>כדי לחלק כמות ביחס נתון: סוכמים את החלקים, מחלקים את הכמות הכוללת בסכום (זה גודל של "חלק אחד"), ואז כופלים בכל צד של היחס.</p>
+  <p><b>בעיות כדורים בכדים</b> מוסיפות תנאי חשוב: מספרי הכדורים חייבים להיות <b>מספרים שלמים</b>. אם היחס אדומים:לבנים הוא 3:1, מספר האדומים חייב להתחלק ב-3.</p>`,
+  example:{title:'דוגמה פתורה: מערבבים לבן וכחול ביחס 5:2, סך הכול 28 ליטר. כמה ליטר כחול?', steps:[
+    'סוכמים חלקים: 5+2 = 7 חלקים.',
+    'גודל חלק אחד: 28 חלקי 7 = 4 ליטר.',
+    'הכחול הוא 2 חלקים: 4·2 = <b>8 ליטר</b>. בדיקה: לבן 20 ליטר, ו-20:8 = 5:2.'
+  ]},
+  trap:'הטעות הנפוצה: לחלק את הכמות הכוללת ישר באיבר של היחס (28 חלקי 2). האיברים הם חלקים יחסיים - קודם סוכמים אותם, ורק אז מחלקים.',
+  practice:[
+   {q:'בכיתה היחס בין בנים לבנות הוא <span class="math">3:2</span>, ובסך הכול 30 תלמידים. כמה בנות בכיתה?',options:['<span class="math">12</span>','<span class="math">18</span>','<span class="math">15</span>','<span class="math">10</span>'],correct:0,
+    hints:['סך החלקים: 3+2 = 5. כמה זה חלק אחד מתוך 30?','חלק אחד = 6 תלמידים. הבנות הן 2 חלקים.'],
+    explain:'5 חלקים, כל חלק 6 תלמידים. בנות = 2 חלקים = <b>12</b>. בדיקה: בנים 18, ו-18:12 = 3:2.',trap:'18 הוא מספר הבנים - שאלו על הבנות. תמיד בודקים למי מתייחס כל צד של היחס.'},
+   {q:'מערבבים צבע לבן וכחול ביחס <span class="math">5:2</span>, בסך הכול 28 ליטר. כמה ליטרים של צבע כחול?',options:['<span class="math">8</span>','<span class="math">20</span>','<span class="math">14</span>','<span class="math">10</span>'],correct:0,
+    hints:['7 חלקים בסך הכול. 28 חלקי 7?','חלק אחד = 4 ליטר. כחול = 2 חלקים.'],
+    explain:'חלק אחד = 28/7 = 4 ליטר, כחול = 2 חלקים = <b>8 ליטר</b>.',trap:'14 זה 28 חלקי 2 - חילוק ישיר באיבר היחס בלי לסכום קודם את החלקים.'},
+   {q:'בשטיח, היחס בין ריבועים מפוספסים למנוקדים הוא <span class="math">3:2</span>. איזה חלק מכלל הריבועים מנוקד?',options:[frac(2,5),frac(3,5),frac(2,3),frac(3,2)],correct:0,
+    hints:['"חלק מתוך שלם" - המכנה הוא סך כל החלקים.','סך החלקים 5, והמנוקדים הם 2 מתוכם.'],
+    explain:'השלם הוא 3+2 = 5 חלקים, והמנוקדים הם 2 מהם: <b>'+frac(2,5)+'</b>.',trap:frac(2,3)+' משווה מנוקדים למפוספסים, אבל השאלה מבקשת חלק מתוך <u>השלם</u>.'}
+  ]},
+{ id:'scale',
+  title:'קנה מידה',
+  desc:'מפות, דגמים ותרשימים: קנה מידה הוא יחס בין אותן יחידות - והמרת יחידות היא מחצית הפתרון.',
+  concept:`<p><b>קנה מידה</b> כמו <span class="math">1:500</span> אומר: יחידה אחת בתרשים מייצגת 500 אותן יחידות במציאות. <b>אותן יחידות!</b> 1:500 אינו "ס״מ מול מטרים" אלא ס״מ מול ס״מ (או מ׳ מול מ׳).</p>
+  <p>הכלל המעשי: <b>קודם ממירים את המציאות לס״מ</b>, אחר כך מחלקים או כופלים בקנה המידה, ובסוף ממירים בחזרה ליחידה נוחה.</p>
+  <p>תזכורת המרות: 1 מ׳ = 100 ס״מ, ו-1 ק״מ = 100,000 ס״מ.</p>`,
+  example:{title:'דוגמה פתורה: בריכה 50 מ׳ על 25 מ׳ מודפסת בקנה מידה 1:500. מה מידותיה בתמונה?', steps:[
+    'ממירים את המציאות לס״מ: 50 מ׳ = 5,000 ס״מ, ו-25 מ׳ = 2,500 ס״מ.',
+    'מחלקים בקנה המידה: 5,000 חלקי 500 = 10 ס״מ, ו-2,500 חלקי 500 = 5 ס״מ.',
+    'מידות התמונה: <b>10 ס״מ על 5 ס״מ</b>.'
+  ]},
+  trap:'שתי מלכודות: לשכוח להמיר יחידות (50 חלקי 500 בלי המרה), ולצמצם "1:500" לשבר מול מטרים. קנה מידה עובד רק בין אותן יחידות.',
+  practice:[
+   {q:'מגדל בגובה 330 מ׳ מיוצג בדגם בגובה 15 ס״מ. מה קנה המידה דגם:מציאות?',options:['<span class="math">1:2,200</span>','<span class="math">1:220</span>','<span class="math">1:22</span>','<span class="math">22:1</span>'],correct:0,
+    hints:['ממירים קודם את 330 מ׳ לס״מ.','330 מ׳ = 33,000 ס״מ. עכשיו מצמצמים 15:33,000.'],
+    explain:'330 מ׳ = 33,000 ס״מ. היחס 15:33,000 מצטמצם בחילוק ב-15 ל-<b>1:2,200</b>.',trap:'1:22 מתקבל כששוכחים להמיר מטרים לס״מ - ההמרה היא חצי מהשאלה.'},
+   {q:'בריכה של 50 מ׳ על 25 מ׳ הודפסה בקנה מידה <span class="math">1:500</span>. מה מידותיה בתמונה?',options:['<span class="math">10 × 5</span> ס״מ','<span class="math">100 × 50</span> ס״מ','<span class="math">1 × 0.5</span> ס״מ','<span class="math">25 × 12.5</span> ס״מ'],correct:0,
+    hints:['המירו מטרים לס״מ ואז חלקו ב-500.','50 מ׳ = 5,000 ס״מ. חלקו ב-500.'],
+    explain:'5,000/500 = 10 ס״מ ו-2,500/500 = 5 ס״מ. התמונה: <b>10×5 ס״מ</b>.',trap:'1×0.5 ס״מ מתקבל מחילוק של המטרים עצמם ב-500 בלי המרה.'},
+   {q:'במפה בקנה מידה <span class="math">1:200,000</span> המרחק בין שתי ערים הוא 3 ס״מ. מה המרחק במציאות?',options:['<span class="math">6 ק״מ</span>','<span class="math">60 ק״מ</span>','<span class="math">0.6 ק״מ</span>','<span class="math">600 ק״מ</span>'],correct:0,
+    hints:['כופלים: 3 כפול 200,000 ס״מ.','600,000 ס״מ. כמה ס״מ בק״מ?'],
+    explain:'3·200,000 = 600,000 ס״מ. מחלקים ב-100,000 (ס״מ בק״מ): <b>6 ק״מ</b>.',trap:'60 ק״מ זו טעות אפסים בהמרה. סופרים אפסים: 1 ק״מ = 100,000 ס״מ.'}
+  ]},
+{ id:'geo',
+  title:'יחסים בגאומטריה',
+  desc:'שטחי משולשים בתוך מלבנים, זוויות המחולקות ביחס נתון, ומלבן עם שטח ויחס צלעות - הסגנונות של דף העבודה.',
+  concept:`<p><b>משולש בתוך מלבן:</b> שטח משולש הוא בסיס כפול גובה חלקי 2. כשהמשולש בנוי על צלע של מלבן, הגובה שלו שווה לצלע האחרת של המלבן - ואז היחס לשטח המלבן קל לחשב.</p>
+  <p><b>תגלית חשובה:</b> משולש שבסיסו צלע שלמה של מלבן וקודקודו על הצלע הנגדית הוא <b>תמיד חצי מהמלבן</b> - לא משנה איפה הקודקוד. תשחקו עם זה במעבדה.</p>
+  <p><b>זוויות ביחס:</b> סכום זוויות במשולש 180°. מחלקים אותן ביחס נתון בדיוק כמו שמחלקים כמות: סוכמים חלקים, מוצאים חלק אחד, כופלים.</p>
+  <p><b>מלבן עם שטח ויחס צלעות:</b> מסמנים את הצלעות <span class="math">x</span> ו-<span class="math">3x</span>, פותרים <span class="math">3x² = 48</span> ומקבלים <span class="math">x = 4</span>.</p>`,
+  example:{title:'דוגמה פתורה: מלבן 10×2 ס״מ, משולש צבוע עם בסיס 4 ס״מ על צלע המלבן. מה היחס בין שטח המשולש לשטח המלבן?', steps:[
+    'שטח המלבן: 10·2 = 20 סמ״ר.',
+    'שטח המשולש: בסיס 4, גובה 2 (גובה המלבן): <span class="math">4·2/2 = 4</span> סמ״ר.',
+    'היחס: <span class="math">4:20</span>, ואחרי צמצום <b>1:5</b>.'
+  ]},
+  trap:'לשכוח את החלוקה ב-2 בשטח משולש היא הטעות הנפוצה כאן: מי שמחשב 4·2 = 8 מקבל יחס 8:20 = 2:5 במקום 1:5.',
+  practice:[
+   {q:'מלבן שמידותיו 10 ס״מ על 2 ס״מ. בתוכו משולש צבוע שבסיסו 4 ס״מ (על צלע המלבן) וגובהו 2 ס״מ. מה היחס בין שטח המשולש הצבוע לשטח המלבן?',options:['<span class="math">1:5</span>','<span class="math">1:4</span>','<span class="math">2:5</span>','<span class="math">1:10</span>'],correct:0,
+    hints:['שטח מלבן: 10·2. שטח משולש: בסיס כפול גובה חלקי...','המשולש 4 סמ״ר, המלבן 20 סמ״ר. צמצמו.'],
+    explain:'שטח משולש 4·2/2 = 4, שטח מלבן 20. היחס 4:20 = <b>1:5</b>.',trap:'2:5 מתקבל כששוכחים לחלק ב-2 את שטח המשולש.'},
+   {q:'במשולש, הזוויות ביחס <span class="math">1:2:3</span>. מה גודל הזווית הגדולה?',options:['<span class="math">90°</span>','<span class="math">60°</span>','<span class="math">120°</span>','<span class="math">30°</span>'],correct:0,
+    hints:['סכום זוויות במשולש? מחלקים אותו לפי היחס.','1+2+3 = 6 חלקים. חלק אחד = 180/6.'],
+    explain:'6 חלקים, חלק = 30°. הגדולה היא 3 חלקים: <b>90°</b>. (זהו משולש ישר-זווית!)',trap:'60° היא הזווית האמצעית (2 חלקים) - שאלו על הגדולה.'},
+   {q:'שטחו של מלבן 48 סמ״ר והיחס בין צלעותיו הוא <span class="math">1:3</span>. מה היקף המלבן?',options:['<span class="math">32 ס״מ</span>','<span class="math">28 ס״מ</span>','<span class="math">24 ס״מ</span>','<span class="math">16 ס״מ</span>'],correct:0,
+    hints:['מסמנים צלעות x ו-3x וכותבים משוואת שטח.','3x² = 48, כלומר x² = 16.'],
+    explain:'x² = 16 ולכן x = 4. הצלעות 4 ו-12 ס״מ, וההיקף 2·(4+12) = <b>32 ס״מ</b>.',trap:'16 ס״מ הוא x² - לא הצלע ולא ההיקף. ממשיכים עד הסוף: קודם צלעות, אחר כך היקף.'}
+  ]}
+];
+const DIAG = [
+ {skill:'simplify',q:'צמצמו את היחס <span class="math">18:24</span>.',options:['<span class="math">3:4</span>','<span class="math">9:12</span>','<span class="math">2:3</span>','<span class="math">4:3</span>'],correct:0,
+  hints:['גם 18 וגם 24 מתחלקים ב-6.','18/6 = 3, ו-24/6 = ...'],
+  explain:'מחלקים את שני האיברים ב-6: <b>3:4</b>.',trap:'9:12 שקול אבל לא מצומצם - באבחון מחפשים את הצמצום הסופי.'},
+ {skill:'equiv',q:'השלימו יחס שקול: <span class="math">5:9 = 20:?</span>',options:['<span class="math">36</span>','<span class="math">24</span>','<span class="math">45</span>','<span class="math">29</span>'],correct:0,
+  hints:['בכמה הוכפל 5 כדי להפוך ל-20?','מכפילים גם את 9 באותו מספר.'],
+  explain:'5→20 זה כפל ב-4, ולכן 9·4 = <b>36</b>.',trap:'24 מתקבל מחיבור 15 - יחס נשמר רק בכפל.'},
+ {skill:'prop',q:'פתרו: <span class="math">x/8 = 9/24</span>',options:['<span class="math">x = 3</span>','<span class="math">x = 12</span>','<span class="math">x = 6</span>','<span class="math">x = 2</span>'],correct:0,
+  hints:['כפל בהצלבה: 24x = 8·9.','72 חלקי 24.'],
+  explain:'24x = 72, מחלקים ב-24: <b>x = 3</b>.',trap:'אפשר גם לצמצם קודם: 9/24 = 3/8, ומיד רואים ש-x = 3.'},
+ {skill:'part',q:'היחס בין בנים לבנות בכיתה הוא <span class="math">3:2</span>, ובסך הכול 30 תלמידים. כמה בנות בכיתה?',options:['<span class="math">12</span>','<span class="math">18</span>','<span class="math">15</span>','<span class="math">20</span>'],correct:0,
+  hints:['סה״כ חלקים: 5. גודל חלק: 30/5.','בנות = 2 חלקים.'],
+  explain:'חלק = 6, בנות = 2 חלקים = <b>12</b>.',trap:'18 הוא מספר הבנים - שאלו על הבנות.'},
+ {skill:'scale',q:'במפה בקנה מידה <span class="math">1:50,000</span> מדדנו 4 ס״מ. מה המרחק במציאות?',options:['<span class="math">2 ק״מ</span>','<span class="math">20 ק״מ</span>','<span class="math">200 ק״מ</span>','<span class="math">0.2 ק״מ</span>'],correct:0,
+  hints:['4 כפול 50,000 ס״מ.','200,000 ס״מ. כמה ס״מ יש בק״מ?'],
+  explain:'4·50,000 = 200,000 ס״מ = 2,000 מ׳ = <b>2 ק״מ</b>.',trap:'המפתח הוא ההמרה בסוף: 1 ק״מ = 100,000 ס״מ.'},
+ {skill:'geo',q:'מלבן 10 ס״מ על 2 ס״מ, ובתוכו משולש צבוע שבסיסו 4 ס״מ וגובהו 2 ס״מ. מה היחס בין שטח המשולש לשטח המלבן?',options:['<span class="math">1:5</span>','<span class="math">2:5</span>','<span class="math">1:4</span>','<span class="math">4:10</span>'],correct:0,
+  hints:['שטח משולש = בסיס כפול גובה חלקי 2.','משולש: 4 סמ״ר. מלבן: 20 סמ״ר.'],
+  explain:'4:20 = <b>1:5</b>.',trap:'2:5 = שכחת החלוקה ב-2 של שטח המשולש.'}
+];
+const WS = [
+ {skill:'geo',q:'מלבן שאורכו 12 ס״מ וגובהו 3 ס״מ. בתוכו משולש צבוע שבסיסו 6 ס״מ מונח על הצלע התחתונה. מה היחס בין שטח המשולש הצבוע לשטח המלבן?',options:['<span class="math">1:4</span>','<span class="math">1:2</span>','<span class="math">1:6</span>','<span class="math">6:36</span>'],correct:0,
+  hints:['שטח משולש: 6·3/2. שטח מלבן: 12·3.','9 מול 36 - וצמצום.'],
+  explain:'שטח משולש 6·3/2 = 9 סמ״ר, שטח מלבן 36 סמ״ר. היחס 9:36 = <b>1:4</b>.',trap:'6:36 משווה בסיס לשטח וגם לא מצומצם - שני אלה כפולים.'},
+ {skill:'geo',q:'מלבן 16 ס״מ על 2 ס״מ, ובתוכו משולש צבוע שבסיסו 6 ס״מ וגובהו 2 ס״מ. מה היחס בין שטח המשולש לשטח המלבן?',options:['<span class="math">3:16</span>','<span class="math">3:8</span>','<span class="math">1:5</span>','<span class="math">6:32</span>'],correct:0,
+  hints:['שטח משולש: 6·2/2 = 6. שטח מלבן: 16·2.','6 מול 32, ואז צמצום ב-2.'],
+  explain:'משולש 6 סמ״ר, מלבן 32 סמ״ר. 6:32 = <b>3:16</b>.',trap:'6:32 נכון אבל לא מצומצם; 3:8 מתקבל כששוכחים את החלוקה ב-2 של שטח המשולש.'},
+ {skill:'geo',q:'במלבן 14 ס״מ על 6 ס״מ בונים משולש שבסיסו כל הצלע התחתונה וקודקודו נמצא על הצלע העליונה. מה היחס בין שטח המשולש לשטח המלבן?',options:['תמיד 1:2, לא משנה איפה הקודקוד','תלוי במיקום הקודקוד','1:3','בין 1:4 ל-1:2'],correct:0,
+  hints:['מה גובה המשולש? השוו לצלע המלבן.','שטח: 14·6/2 מול 14·6.'],
+  explain:'גובה המשולש שווה תמיד לגובה המלבן (6), והבסיס שווה לאורך (14). שטח המשולש 14·6/2 = 42 = בדיוק חצי מ-84. היחס <b>1:2</b> תמיד - מיקום הקודקוד לא משנה. נסו במעבדה!',trap:'האינטואיציה אומרת שהמיקום משנה - אבל שטח משולש תלוי רק בבסיס ובגובה, לא ב"נטייה".'},
+ {skill:'geo',q:'באותו מלבן 14×6 עם משולש שבסיסו כל הצלע התחתונה וקודקודו על העליונה: מה היחס בין שטח המשולש הצבוע לסכום שטחי שני המשולשים הלבנים שנשארו בצדדים?',options:['<span class="math">1:1</span>','<span class="math">1:2</span>','<span class="math">2:1</span>','תלוי במיקום הקודקוד'],correct:0,
+  hints:['אם הצבוע הוא חצי מהמלבן, כמה נשאר ללבנים?','42 מול 84-42.'],
+  explain:'הצבוע 42 סמ״ר, והלבנים יחד 84-42 = 42 סמ״ר. היחס 42:42 = <b>1:1</b> - תמיד שווה!',trap:'גם כשהקודקוד זז, שני הצדדים נשארים שווים - כי הצבוע תמיד בדיוק חצי.'},
+ {skill:'part',q:'בכד א׳ היחס בין מספר הכדורים האדומים ללבנים הוא <span class="math">3:1</span>. האם ייתכן שבכד א׳ יש 7 כדורים אדומים?',options:['לא - 7 לא מתחלק ב-3, ואז מספר הלבנים לא שלם','כן - אפשר תמיד','כן, אם סך הכדורים זוגי','לא - כי חייבים בדיוק 4 כדורים'],correct:0,
+  hints:['אם יש 7 אדומים והיחס 3:1, כמה לבנים צריך?','7/3 הוא לא מספר שלם.'],
+  explain:'לפי היחס, מספר הלבנים צריך להיות 7/3 - לא שלם, ואי אפשר לחתוך כדור. לכן <b>לא ייתכן</b>. מספר אדומים אפשרי: 3, 6, 9...',trap:'בבעיות כדורים בכדים התשובה חייבת להיות מספרים שלמים - זו הבדיקה הנסתרת.'},
+ {skill:'geo',q:'זווית אחת במשולש היא בת 120°. היחס בין שתי הזוויות האחרות הוא <span class="math">1:5</span>. מה גודל שתי הזוויות האחרות?',options:['<span class="math">10°</span> ו-<span class="math">50°</span>','<span class="math">12°</span> ו-<span class="math">48°</span>','<span class="math">20°</span> ו-<span class="math">40°</span>','<span class="math">15°</span> ו-<span class="math">45°</span>'],correct:0,
+  hints:['כמה נשאר לשתי הזוויות יחד מתוך 180°?','60° מתחלקות ביחס 1:5 - סה״כ 6 חלקים.'],
+  explain:'נשאר 180-120 = 60°. 6 חלקים, חלק = 10°. הזוויות: <b>10° ו-50°</b>.',trap:'12° ו-48° מתקבל כשמחלקים ביחס 1:4 או שוכחים שהחלוקה היא של ה-60 הנותרים בלבד... תמיד קודם מחסרים את הזווית הנתונה.'},
+ {skill:'geo',q:'שטחו של מלבן 48 סמ״ר והיחס בין צלעותיו הוא <span class="math">1:3</span>. מה אורכי צלעות המלבן?',options:['4 ס״מ ו-12 ס״מ','6 ס״מ ו-18 ס״מ','8 ס״מ ו-16 ס״מ','3 ס״מ ו-9 ס״מ'],correct:0,
+  hints:['סמנו צלעות x ו-3x וכתבו משוואת שטח.','3x² = 48.'],
+  explain:'3x² = 48, כלומר x² = 16, ו-x = 4. הצלעות: <b>4 ס״מ ו-12 ס״מ</b>. בדיקה: 4·12 = 48.',trap:'6 ו-18 נראים ביחס 1:3 אבל השטח שלהם 108, לא 48. תמיד בודקים את התשובה בשטח.'}
+];
+/* ============ STATE ============ */
+const KEY='yahasim-steps-v1';
+let state={diagDone:false,diagAnswers:[],stats:{},practiceDone:{}};
+try{const s=localStorage.getItem(KEY);if(s)state=Object.assign(state,JSON.parse(s));}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+function st(skill){if(!state.stats[skill])state.stats[skill]={att:0,firstOk:0};return state.stats[skill];}
+function mastery(skill){const s=state.stats[skill];if(!s||!s.att)return null;return s.firstOk/s.att;}
+/* ============ VIEWS ============ */
+const views=['home','diag','map','summary'];
+function show(v){views.forEach(x=>document.getElementById('view-'+x).classList.toggle('active',x===v));
+ if(v==='map')renderMap(); if(v==='summary')renderSummary(); if(v==='home')renderHomeStats();
+ window.scrollTo(0,0);}
+document.getElementById('navHome').onclick=()=>show('home');
+document.getElementById('navMap').onclick=()=>show('map');
+document.getElementById('navSummary').onclick=()=>show('summary');
+document.getElementById('startDiag').onclick=()=>startDiag();
+document.getElementById('skipDiag').onclick=()=>show('map');
+const themeBtn=document.getElementById('themeBtn');
+if(matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.dataset.theme='dark';
+try{if(localStorage.getItem(KEY+'-theme')==='dark')document.documentElement.dataset.theme='dark';else if(localStorage.getItem(KEY+'-theme')==='light')document.documentElement.dataset.theme='';}catch(e){}
+themeBtn.onclick=()=>{const d=document.documentElement.dataset.theme==='dark';document.documentElement.dataset.theme=d?'':'dark';try{localStorage.setItem(KEY+'-theme',d?'light':'dark');}catch(e){}};
+/* ============ QUIZ ENGINE ============ */
+function runQuiz(container,questions,onDone,progEl){
+ let i=0,firstTry=true;
+ function render(){
+  const q=questions[i];
+  if(progEl)progEl.textContent='שאלה '+(i+1)+' מתוך '+questions.length;
+  container.innerHTML='';
+  const qh=document.createElement('div');qh.className='question';qh.innerHTML=q.q;container.appendChild(qh);
+  const hintBtn=document.createElement('button');hintBtn.className='btn ghost';hintBtn.textContent='רמז';hintBtn.style.marginBottom='8px';
+  let hintIdx=0;const hintBox=document.createElement('div');hintBox.className='hintbox';
+  hintBtn.onclick=()=>{if(hintIdx<q.hints.length){hintBox.innerHTML='<b>רמז '+(hintIdx+1)+':</b> '+q.hints[hintIdx];hintBox.classList.add('show');hintIdx++;if(hintIdx<q.hints.length)hintBtn.textContent='רמז נוסף';else hintBtn.style.display='none';}};
+  container.appendChild(hintBtn);container.appendChild(hintBox);
+  const opts=document.createElement('div');opts.className='options';container.appendChild(opts);
+  const fb=document.createElement('div');fb.className='feedback';container.appendChild(fb);
+  firstTry=true;
+  q.options.forEach((op,idx)=>{
+   const b=document.createElement('button');b.className='answer';b.innerHTML=op;
+   b.onclick=()=>{
+    if(idx===q.correct){
+     b.classList.add('correct');
+     opts.querySelectorAll('button').forEach(x=>x.disabled=true);
+     const s=st(q.skill);s.att++;if(firstTry)s.firstOk++;save();
+     fb.innerHTML='<b>נכון!</b> '+q.explain+(q.trap?'<br><span style="color:var(--muted)"><b>לשים לב:</b> '+q.trap+'</span>':'');
+     fb.classList.add('show');
+     const next=document.createElement('button');next.className='btn';next.style.marginTop='12px';
+     next.textContent=i+1<questions.length?'השאלה הבאה':'סיום';
+     next.onclick=()=>{i++;if(i<questions.length)render();else onDone();};
+     fb.appendChild(document.createElement('br'));fb.appendChild(next);
+    }else{
+     b.classList.add('wrong');b.disabled=true;firstTry=false;
+     fb.innerHTML='<b>לא בדיוק.</b> נסי שוב'+(hintIdx===0&&q.hints.length?' - או קחי רמז.':'.');
+     fb.classList.add('show');
+    }
+   };
+   opts.appendChild(b);
+  });
+ }
+ render();
+}
+/* ============ DIAGNOSTIC ============ */
+function startDiag(){
+ show('diag');
+ const body=document.getElementById('diagBody');
+ const prog=document.getElementById('diagProgress');
+
+ runQuiz(body,DIAG.map(d=>({...d})),()=>{
+  prog.textContent='';
+  state.diagDone=true;save();
+  const weak=ORDER.filter(k=>{const s=state.stats[k];return s&&s.att>0&&s.firstOk===0;});
+  body.innerHTML='<h3>האבחון הושלם!</h3><div class="concept">'+(weak.length?
+   'מצאנו <b>'+weak.length+'</b> נושאים שכדאי לחזק: <b>'+weak.map(k=>SKILLS[k].name).join(', ')+'</b>. מפת הלמידה כבר מסודרת לפי הסדר הנכון עבורך.':
+   'כל הכבוד - אין פערים באבחון! מומלץ בכל זאת לעבור על הנושאים לפי הסדר, במיוחד על יחסים בגאומטריה לקראת דף העבודה.')+'</div>';
+  const b=document.createElement('button');b.className='btn';b.style.marginTop='14px';b.textContent='למפת הלמידה שלי';b.onclick=()=>show('map');body.appendChild(b);
+ },prog);
+}
+/* ============ MAP ============ */
+function statusBadge(skill){
+ const s=state.stats[skill];
+ if(!s||!s.att)return '<span class="badge b-new">חדש</span>';
+ const m=s.firstOk/s.att;
+ if(m>=0.75&&s.att>=2)return '<span class="badge b-ok">שולטת</span>';
+ if(m>=0.4)return '<span class="badge b-mid">מתקדמת</span>';
+ return '<span class="badge b-weak">דורש חיזוק</span>';
+}
+function orderedSections(){
+ const scored=SECTIONS.map(sec=>{const s=state.stats[sec.id];const m=s&&s.att?s.firstOk/s.att:null;return{sec,m};});
+ const weak=scored.filter(x=>x.m!==null&&x.m<0.75).sort((a,b)=>a.m-b.m);
+ const rest=scored.filter(x=>!(x.m!==null&&x.m<0.75));
+ return weak.concat(rest).map(x=>x.sec);
+}
+function renderMap(){
+ const grid=document.getElementById('mapGrid');grid.innerHTML='';
+ orderedSections().forEach(sec=>{
+  const c=document.createElement('div');c.className='card';
+  c.innerHTML='<div class="icon">'+SKILLS[sec.id].icon+'</div><h3>'+sec.title+statusBadge(sec.id)+'</h3><p>'+sec.desc+'</p>';
+  const b=document.createElement('button');b.className='btn';b.textContent='פתיחה';b.onclick=()=>openSection(sec.id);
+  c.appendChild(b);grid.appendChild(c);
+ });
+ const reco=document.getElementById('recoBox');
+ if(state.diagDone){
+  const weak=ORDER.filter(k=>{const s=state.stats[k];return s&&s.att>0&&s.firstOk/s.att<0.75;}).sort((a,b)=>mastery(a)-mastery(b));
+  reco.innerHTML=weak.length?'<div class="reco"><b>איפה להשקיע:</b> לפי האבחון והתרגול, כדאי להתחיל מ<b>'+SKILLS[weak[0]].name+'</b>'+(weak[1]?' ואחר כך <b>'+SKILLS[weak[1]].name+'</b>':'')+'. שם הזמן שלך יעשה הכי הרבה שינוי.</div>':'<div class="reco" style="border-inline-start-color:var(--green)"><b>יפה מאוד!</b> אין כרגע נושא חלש. כדאי לתרגל את סגנונות דף העבודה למטה.</div>';
+ }else{
+  reco.innerHTML='<div class="reco"><b>טיפ:</b> עדיין לא עשית אבחון. 6 שאלות קצרות יסדרו את המפה לפי מה שאת באמת צריכה. <button class="btn" style="margin-inline-start:8px" onclick="startDiag()">לאבחון</button></div>';
+ }
+}
+/* ============ SECTION DIALOG ============ */
+const dlg=document.getElementById('secDialog');
+document.getElementById('secClose').onclick=()=>dlg.close();
+dlg.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+ dlg.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===t));
+ ['learn','lab','practice'].forEach(p=>document.getElementById('pane-'+p).classList.toggle('active',p===t.dataset.tab));
+});
+let currentSec=null;
+function openSection(id){
+ currentSec=SECTIONS.find(s=>s.id===id);
+ document.getElementById('secTitle').textContent=currentSec.title;
+ // learn pane
+ const lp=document.getElementById('pane-learn');
+ lp.innerHTML='<div class="learn-grid"><div class="concept">'+currentSec.concept+'</div><div><div class="example"><b>'+currentSec.example.title+'</b><div id="steps"></div><button class="btn" id="nextStep" style="margin-top:12px">הצגת השלב הבא</button></div><div class="trap"><b>מלכודת נפוצה:</b> '+currentSec.trap+'</div></div></div>';
+ const steps=document.getElementById('steps');
+ currentSec.example.steps.forEach(s=>{const d=document.createElement('div');d.className='step';d.innerHTML=s;steps.appendChild(d);});
+ let shown=0;const nb=document.getElementById('nextStep');
+ nb.onclick=()=>{if(shown<currentSec.example.steps.length){steps.children[shown].classList.add('show');shown++;if(shown>=currentSec.example.steps.length)nb.style.display='none';}};
+ // lab pane
+ const labp=document.getElementById('pane-lab');labp.innerHTML='';
+ LABS[id](labp);
+ // practice pane
+ const pp=document.getElementById('pane-practice');pp.innerHTML='';
+ runQuiz(pp,currentSec.practice.map(q=>({...q,skill:id})),()=>{
+  pp.innerHTML='<h3>סיימת את התרגול בנושא!</h3><div class="concept">התוצאות נשמרו בסיכום. אפשר לחזור למפה או לעבור נושא.</div>';
+  const b=document.createElement('button');b.className='btn';b.style.marginTop='12px';b.textContent='חזרה למפת הלמידה';b.onclick=()=>{dlg.close();show('map');};pp.appendChild(b);
+ });
+ // reset tabs
+ dlg.querySelectorAll('.tab').forEach((x,xi)=>x.classList.toggle('active',xi===0));
+ ['learn','lab','practice'].forEach((p,pi)=>document.getElementById('pane-'+p).classList.toggle('active',pi===0));
+ dlg.showModal();
+}
+/* ============ WORKSHEET ============ */
+const wsDlg=document.getElementById('wsDialog');
+document.getElementById('wsClose').onclick=()=>wsDlg.close();
+document.getElementById('openWorksheet').onclick=()=>{
+ const body=document.getElementById('wsBody');body.innerHTML='';
+ runQuiz(body,WS.map(q=>({...q})),()=>{
+  body.innerHTML='<h3>סיימת את תרגול דף העבודה!</h3><div class="concept">כל הכבוד. הצצי בסיכום כדי לראות איפה עוד כדאי להשקיע.</div>';
+  const b=document.createElement('button');b.className='btn';b.style.marginTop='12px';b.textContent='לסיכום שלי';b.onclick=()=>{wsDlg.close();show('summary');};body.appendChild(b);
+ });
+ wsDlg.showModal();
+};
+/* ============ LABS ============ */
+function gcd(a,b){while(b){const t=b;b=a%b;a=t;}return a;}
+function slider(label,min,max,val){const d=document.createElement('div');d.className='range';
+ d.innerHTML='<label><b>'+label+':</b> <span class="math">'+val+'</span></label>';
+ const i=document.createElement('input');i.type='range';i.min=min;i.max=max;i.value=val;d.appendChild(i);return{el:d,input:i,labelEl:d.querySelector('span')};}
+const LABS={
+ simplify(host){
+  host.innerHTML='<div class="lab-grid"><div class="stage" id="st1"></div><div class="controls"><p class="concept" style="margin-top:0">הזיזי את המחוונים וצפי איך היחס מצטמצם. שימי לב: היחס המצומצם מספר כמה "עמודות חוזרות" יש בדוגמה.</p></div></div>';
+  const stage=host.querySelector('#st1'),ctrl=host.querySelector('.controls');
+  const A=slider('כמות א׳',1,24,18),B=slider('כמות ב׳',1,24,24);
+  const out=document.createElement('div');out.className='readout';
+  ctrl.appendChild(A.el);ctrl.appendChild(B.el);ctrl.appendChild(out);
+  function draw(){
+   const a=+A.input.value,b=+B.input.value,g=gcd(a,b),sa=a/g,sb=b/g;
+   A.labelEl.textContent=a;B.labelEl.textContent=b;
+   const cw=Math.max(6,Math.min(16,Math.floor(320/Math.max(sa,sb)+4)));
+   let cells='';const cell=(x,y,c)=>'<rect x="'+x+'" y="'+y+'" width="'+(cw-2)+'" height="16" rx="3" fill="'+c+'"/>';
+   for(let i=0;i<sa;i++)cells+=cell(10+i*cw,40,'var(--teal)');
+   for(let i=0;i<sb;i++)cells+=cell(10+i*cw,70,'var(--orange)');
+   let rep='';for(let r=0;r<g;r++)rep+='<rect x="'+(10+r*(Math.max(sa,sb)*cw))+'" y="110" width="'+(Math.min(Math.max(sa,sb)*cw-6,340))+'" height="8" rx="4" fill="var(--line)"/>';
+   stage.innerHTML='<svg viewBox="0 0 400 170" role="img" aria-label="הצגת יחס"><text x="395" y="55" text-anchor="end" font-size="14" fill="var(--ink)">א׳ ('+a+')</text><text x="395" y="85" text-anchor="end" font-size="14" fill="var(--ink)">ב׳ ('+b+')</text>'+cells+rep+'<text x="200" y="150" text-anchor="middle" font-size="12" fill="var(--muted)">כל פס = חזרה אחת של הדוגמה המצומצמת ('+g+' חזרות)</text></svg>';
+   out.innerHTML='היחס: <span class="math" style="font-size:22px">'+a+':'+b+'</span><br>מחלק משותף גדול ביותר: <b>'+g+'</b><br>מחלקים את שני הצדדים ב-'+g+' ומקבלים:<br><span class="math" style="font-size:26px;color:var(--teal)">'+sa+':'+sb+'</span>';
+  }
+  A.input.oninput=draw;B.input.oninput=draw;draw();
+ },
+ equiv(host){
+  host.innerHTML='<div class="lab-grid"><div class="stage" id="st2"></div><div class="controls"><p class="concept" style="margin-top:0">מכונת היחסים השקולים: בחרי יחס בסיס, הזיזי את המכפיל, וצפי איך שני האיברים גדלים <b>באותו גורם</b>. אחר כך נסי למלא את החסר.</p></div></div>';
+  const stage=host.querySelector('#st2'),ctrl=host.querySelector('.controls');
+  const bases=[[2,3],[3,4],[5,6],[4,5]];let bi=0;
+  const baseBtn=document.createElement('button');baseBtn.className='btn ghost';baseBtn.textContent='החלפת יחס בסיס';
+  const K=slider('מכפיל',1,10,3);
+  const out=document.createElement('div');out.className='readout';
+  const fill=document.createElement('div');fill.innerHTML='<div style="margin-top:6px"><b>נסי בעצמך:</b> <span id="eqQ"></span> = <input class="num-input" id="eqIn" inputmode="numeric" style="width:80px"> <button class="btn" id="eqChk">בדיקה</button> <span id="eqFb"></span></div>';
+  ctrl.appendChild(baseBtn);ctrl.appendChild(K.el);ctrl.appendChild(out);ctrl.appendChild(fill);
+  let fq={a:3,b:5,m:4};
+  function newFill(){fq={a:2+Math.floor(Math.random()*6),b:3+Math.floor(Math.random()*6),m:2+Math.floor(Math.random()*4)};fill.querySelector('#eqQ').innerHTML='<span class="math">'+fq.a+':'+fq.b+' = '+fq.a*fq.m+':?</span>';fill.querySelector('#eqIn').value='';fill.querySelector('#eqFb').textContent='';}
+  fill.querySelector('#eqChk').onclick=()=>{const v=+fill.querySelector('#eqIn').value;const ok=v===fq.b*fq.m;fill.querySelector('#eqFb').innerHTML=ok?'<b style="color:var(--green)">נכון!</b>':'<b style="color:var(--red)">לא - בכמה הוכפל '+fq.a+'?</b>';const s=st('equiv');s.att++;if(ok)s.firstOk++;save();if(ok)setTimeout(newFill,900);};
+  function draw(){
+   const a=bases[bi][0],b=bases[bi][1],k=+K.input.value;K.labelEl.textContent='×'+k;
+   stage.innerHTML='<svg viewBox="0 0 400 200"><text x="200" y="40" text-anchor="middle" font-size="26" font-weight="800" fill="var(--ink)">'+a+' : '+b+'</text><text x="200" y="75" text-anchor="middle" font-size="18" fill="var(--muted)">×'+k+' לשני האיברים</text><text x="200" y="115" text-anchor="middle" font-size="26" font-weight="800" fill="var(--teal)">'+(a*k)+' : '+(b*k)+'</text><path d="M 120 52 L 130 92" stroke="var(--orange)" stroke-width="3" marker-end="url(#ar)"/><path d="M 280 52 L 270 92" stroke="var(--orange)" stroke-width="3" marker-end="url(#ar)"/><defs><marker id="ar" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--orange)"/></marker></defs><text x="200" y="160" text-anchor="middle" font-size="14" fill="var(--muted)">'+(a*k)+'/'+(b*k)+' מצטמצם בחזרה ל-'+a+'/'+b+' - אותו יחס!</text></svg>';
+   out.innerHTML='יחס בסיס: <span class="math">'+a+':'+b+'</span><br>מכפיל: <b>'+k+'</b><br>יחס שקול: <span class="math" style="font-size:22px;color:var(--teal)">'+(a*k)+':'+(b*k)+'</span>';
+  }
+  baseBtn.onclick=()=>{bi=(bi+1)%bases.length;draw();};
+  K.input.oninput=draw;draw();newFill();
+ },
+ prop(host){
+  host.innerHTML='<div class="lab-grid"><div class="stage" id="st3"></div><div class="controls"><p class="concept" style="margin-top:0">מאזני ההצלבה: הזיזי שלושה מספרים, והאפליקציה מוצאת את הרביעי כך שהפרופורציה תישמר. שימי לב שהצלבה תמיד מאוזנת.</p></div></div>';
+  const stage=host.querySelector('#st3'),ctrl=host.querySelector('.controls');
+  const A=slider('a (מונה שמאל)',1,12,3),B=slider('b (מכנה שמאל)',2,16,8),C=slider('c (מונה ימין)',1,24,9);
+  const out=document.createElement('div');out.className='readout';
+  ctrl.appendChild(A.el);ctrl.appendChild(B.el);ctrl.appendChild(C.el);ctrl.appendChild(out);
+  function draw(){
+   const a=+A.input.value,b=+B.input.value,c=+C.input.value;
+   A.labelEl.textContent=a;B.labelEl.textContent=b;C.labelEl.textContent=c;
+   const d=c*b/a, dTxt=Number.isInteger(d)?d:d.toFixed(2);
+   const p1=a*d, p2=b*c, p1t=Number.isInteger(p1)?p1:p1.toFixed(1), p2t=Number.isInteger(p2)?p2:p2.toFixed(1);
+   stage.innerHTML='<svg viewBox="0 0 400 210"><text x="100" y="60" text-anchor="middle" font-size="30" font-weight="800" fill="var(--ink)">'+a+'</text><line x1="70" y1="75" x2="130" y2="75" stroke="var(--ink)" stroke-width="3"/><text x="100" y="110" text-anchor="middle" font-size="30" font-weight="800" fill="var(--ink)">'+b+'</text><text x="200" y="90" text-anchor="middle" font-size="30" fill="var(--muted)">=</text><text x="300" y="60" text-anchor="middle" font-size="30" font-weight="800" fill="var(--ink)">'+c+'</text><line x1="270" y1="75" x2="330" y2="75" stroke="var(--ink)" stroke-width="3"/><text x="300" y="110" text-anchor="middle" font-size="30" font-weight="800" fill="var(--teal)">'+dTxt+'</text><path d="M 115 50 L 285 100" stroke="var(--orange)" stroke-width="2.5" stroke-dasharray="6 5"/><path d="M 285 50 L 115 100" stroke="var(--orange)" stroke-width="2.5" stroke-dasharray="6 5"/><text x="200" y="160" text-anchor="middle" font-size="15" fill="var(--muted)">כפל בהצלבה: '+a+'·'+dTxt+' = '+p1t+' וגם '+b+'·'+c+' = '+p2t+'</text><text x="200" y="185" text-anchor="middle" font-size="15" font-weight="700" fill="var(--teal)">מאוזן!</text></svg>';
+   out.innerHTML='כדי שהיחס יישמר, האיבר החסר חייב להיות:<br><span class="math" style="font-size:22px;color:var(--teal)">d = '+b+'·'+c+' ÷ '+a+' = '+dTxt+'</span><br><span style="color:var(--muted);font-size:15px">ככה פותרים פרופורציה: כופלים בהצלבה ומחלקים במספר שליד הנעלם.</span>';
+  }
+  A.input.oninput=draw;B.input.oninput=draw;C.input.oninput=draw;draw();
+ },
+ part(host){
+  host.innerHTML='<div class="lab-grid"><div class="stage" id="st4"></div><div class="controls"><p class="concept" style="margin-top:0">מעבדת הכדורים: שני כדים עם יחסים קבועים (כמו בדף העבודה). בחרי כד וכמות - ובדקי אם אפשרי ולמה.</p></div></div>';
+  const stage=host.querySelector('#st4'),ctrl=host.querySelector('.controls');
+  const bags=[{name:'כד א׳',label:'אדומים:לבנים = 3:1',rA:3,rB:1,aName:'אדומים',bName:'לבנים',cA:'#c44f4f',cB:'#e8e4da'},{name:'כד ב׳',label:'לבנים:אדומים = 3:2',rA:3,rB:2,aName:'לבנים',bName:'אדומים',cA:'#e8e4da',cB:'#c44f4f'}];
+  let bag=0;
+  const bagBtn=document.createElement('button');bagBtn.className='btn ghost';
+  const row=document.createElement('div');row.innerHTML='<b>כמה '+bags[0].aName+'?</b> <input class="num-input" id="ballN" inputmode="numeric" value="6"> <button class="btn" id="ballChk">בדיקה</button>';
+  const out=document.createElement('div');out.className='readout';out.innerHTML='בחרי כמות ולחצי בדיקה.';
+  bagBtn.textContent='מעבר לכד ב׳';
+  bagBtn.onclick=()=>{bag=1-bag;bagBtn.textContent=bag?'מעבר לכד א׳':'מעבר לכד ב׳';row.querySelector('b').textContent='כמה '+bags[bag].aName+'?';out.innerHTML='בחרי כמות ולחצי בדיקה.';stage.innerHTML='';};
+  ctrl.appendChild(bagBtn);ctrl.appendChild(row);ctrl.appendChild(out);
+  row.querySelector('#ballChk').onclick=()=>{
+   const n=+row.querySelector('#ballN').value||0;const bg=bags[bag];
+   if(n<=0||n>200){out.innerHTML='בחרי מספר בין 1 ל-200.';return;}
+   if(n%bg.rA!==0){
+    out.innerHTML='<b style="color:var(--red)">לא אפשרי.</b> ב'+bg.name+' ('+bg.label+'), מספר ה'+bg.aName+' חייב להתחלק ב-'+bg.rA+', אבל '+n+' ÷ '+bg.rA+' = '+(n/bg.rA).toFixed(2)+' - וה'+bg.bName+' היו צריכים להיות '+(n/bg.rA*bg.rB).toFixed(2)+', לא שלמים.';
+    stage.innerHTML='';const s=st('part');s.att++;save();return;
+   }
+   const other=n/bg.rA*bg.rB,total=n+other;
+   out.innerHTML='<b style="color:var(--green)">אפשרי!</b> '+n+' '+bg.aName+' משמעו '+other+' '+bg.bName+' ('+n+' ÷ '+bg.rA+' × '+bg.rB+'). סה״כ בכד: <b>'+total+'</b> כדורים.';
+   let balls='';const max=Math.min(total,60);const cols=10;
+   for(let i=0;i<max;i++){const red=i<n;const x=20+(i%cols)*36,y=30+Math.floor(i/cols)*36;balls+='<circle cx="'+x+'" cy="'+y+'" r="13" fill="'+(red?bg.cA:bg.cB)+'" stroke="#00000033"/>';}
+   const note=total>60?'<text x="200" y="290" text-anchor="middle" font-size="13" fill="var(--muted)">מוצגים 60 מתוך '+total+'</text>':'';
+   stage.innerHTML='<svg viewBox="0 0 400 300">'+balls+note+'</svg>';
+   const s=st('part');s.att++;s.firstOk++;save();
+  };
+ },
+ scale(host){
+  host.innerHTML='<div class="lab-grid"><div class="stage" id="st5"></div><div class="controls"><p class="concept" style="margin-top:0">מעבדת קנה המידה: בחרי אורך במציאות וקנה מידה, וצפי בחישוב המלא - כולל המרת היחידות, שהיא המקום שבו כולם נפלים.</p></div></div>';
+  const stage=host.querySelector('#st5'),ctrl=host.querySelector('.controls');
+  const L=slider('אורך במציאות (מ׳)',1,500,50);
+  const sc=document.createElement('div');sc.innerHTML='<label><b>קנה מידה:</b></label>';
+  const sel=document.createElement('select');sel.className='num-input';sel.style.width='140px';
+  ['1:50','1:500','1:5,000','1:50,000'].forEach(s=>{const o=document.createElement('option');o.textContent=s;sel.appendChild(o);});sel.value='1:500';
+  sc.appendChild(sel);
+  const out=document.createElement('div');out.className='readout';
+  ctrl.appendChild(L.el);ctrl.appendChild(sc);ctrl.appendChild(out);
+  function draw(){
+   const m=+L.input.value;L.labelEl.textContent=m;
+   const k=+sel.value.replace(/[^0-9]/g,'').replace(/^1/,'1')||500;
+   const cm=m*100, mapCm=cm/k;
+   let disp;
+   if(mapCm>=100)disp=(mapCm/100).toFixed(2).replace(/\.?0+$/,'')+' מ׳';
+   else if(mapCm>=1)disp=(Math.round(mapCm*100)/100)+' ס״מ';
+   else disp=(Math.round(mapCm*10)/10)+' מ״מ';
+   stage.innerHTML='<svg viewBox="0 0 400 180"><rect x="20" y="30" width="360" height="26" rx="6" fill="var(--orange)" opacity="0.85"/><text x="200" y="22" text-anchor="middle" font-size="14" fill="var(--ink)">במציאות: '+m+' מ׳</text><rect x="20" y="105" width="'+Math.max(6,Math.min(360,360/k*1))+'" height="26" rx="6" fill="var(--teal)"/><text x="200" y="100" text-anchor="middle" font-size="14" fill="var(--ink)">בתרשים ('+sel.value+'): '+disp+'</text><text x="200" y="165" text-anchor="middle" font-size="12" fill="var(--muted)">אורך הפס הירוק מוקטן פי '+k.toLocaleString()+' (הדמיה)</text></svg>';
+   out.innerHTML='<b>שלבי הפתרון:</b><br>1. המרה לס״מ: '+m+' מ׳ = <b>'+cm.toLocaleString()+' ס״מ</b><br>2. חילוק בקנה המידה: '+cm.toLocaleString()+' ÷ '+k.toLocaleString()+' = <b>'+(Math.round(mapCm*100)/100).toLocaleString()+' ס״מ</b><br>3. המרה ליחידה נוחה: <b style="color:var(--teal)">'+disp+'</b>';
+  }
+  L.input.oninput=draw;sel.onchange=draw;draw();
+ },
+ geo(host){
+  host.innerHTML='<div class="lab-grid"><div class="stage" id="st6"></div><div class="controls"><p class="concept" style="margin-top:0">התגלית של דף העבודה: גררי (או הזיזי עם הכפתורים) את הקודקוד הכתום על הצלע העליונה - וצפי ביחס השטחים. מה קורה לו?</p></div></div>';
+  const stage=host.querySelector('#st6'),ctrl=host.querySelector('.controls');
+  let px=0.5;
+  const out=document.createElement('div');out.className='readout';
+  const btns=document.createElement('div');btns.className='actions';
+  btns.innerHTML='<button class="btn ghost" id="mvR">◀ הזזה</button><button class="btn ghost" id="mvL">הזזה ▶</button>';
+  ctrl.appendChild(btns);ctrl.appendChild(out);
+  const W=360,H=140,X0=20,Y0=20;
+  function draw(){
+   const apexX=X0+px*W;
+   stage.innerHTML='<svg viewBox="0 0 400 200" id="geoSvg"><rect x="'+X0+'" y="'+Y0+'" width="'+W+'" height="'+H+'" fill="var(--teal2)" stroke="var(--ink)" stroke-width="2"/><polygon points="'+X0+','+(Y0+H)+' '+(X0+W)+','+(Y0+H)+' '+apexX+','+Y0+'" fill="var(--orange)" opacity="0.75" stroke="var(--orange)" stroke-width="2"/><circle id="apex" cx="'+apexX+'" cy="'+Y0+'" r="12" fill="var(--orange)" stroke="#fff" stroke-width="3" style="cursor:grab"/><text x="200" y="190" text-anchor="middle" font-size="13" fill="var(--muted)">מלבן 14 × 6 • הקודקוד נע על הצלע העליונה</text></svg>';
+   out.innerHTML='שטח מלבן: <b>84 סמ״ר</b><br>שטח משולש כתום: <span class="math">14·6/2</span> = <b>42 סמ״ר</b><br>היחס משולש:מלבן: <span class="math" style="font-size:22px;color:var(--teal)">1:2</span><br><span style="color:var(--muted);font-size:15px">הגובה לא משתנה כשהקודקוד זז - ולכן גם השטח לא.</span>';
+   const svg=document.getElementById('geoSvg'),apex=document.getElementById('apex');
+   let drag=false;
+   const move=e=>{if(!drag)return;const pt=svg.createSVGPoint();pt.x=e.clientX??(e.touches&&e.touches[0].clientX);pt.y=e.clientY??(e.touches&&e.touches[0].clientY);const loc=pt.matrixTransform(svg.getScreenCTM().inverse());px=Math.max(0,Math.min(1,(loc.x-X0)/W));draw();};
+   apex.addEventListener('pointerdown',e=>{drag=true;e.preventDefault();});
+   window.addEventListener('pointermove',move);window.addEventListener('pointerup',()=>drag=false,{once:false});
+  }
+  btns.querySelector('#mvR').onclick=()=>{px=Math.max(0,px-0.1);draw();};
+  btns.querySelector('#mvL').onclick=()=>{px=Math.min(1,px+0.1);draw();};
+  draw();
+ }
+};
+/* ============ SUMMARY ============ */
+function statusText(m,att){
+ if(!att)return['לא נבחן','var(--muted)'];
+ if(m>=0.75&&att>=2)return['שולטת','var(--green)'];
+ if(m>=0.4)return['מתקדמת','#9a7a1e'];
+ return['דורש חיזוק','var(--red)'];
+}
+function renderSummary(){
+ const body=document.getElementById('summaryBody');
+ let rows='',weakest=null,worstM=2;
+ ORDER.forEach(k=>{
+  const s=state.stats[k];const att=s?s.att:0;const m=att?s.firstOk/att:null;
+  if(m!==null&&m<worstM){worstM=m;weakest=k;}
+  const [txt,col]=statusText(m,att);
+  rows+='<div class="sumrow"><div><b>'+SKILLS[k].name+'</b></div><div class="bar"><i style="width:'+(m===null?0:Math.round(m*100))+'%"></i></div><div style="color:'+col+';font-weight:800">'+txt+'</div></div>';
+ });
+ const totalAtt=ORDER.reduce((t,k)=>t+(state.stats[k]?state.stats[k].att:0),0);
+ let advice;
+ if(!totalAtt)advice='עוד לא תרגלת. התחילי באבחון הקצר או פתחי נושא מהמפה.';
+ else if(worstM<0.75&&weakest)advice='המלצה: השקיעי את הזמן הקרוב ב<b>'+SKILLS[weakest].name+'</b> - שם הפער הכי גדול. פתחי את הנושא, קראי את הדוגמה צעד-אחר-צעד, שחקי במעבדה, ואז תרגלי שוב.';
+ else advice='אין כרגע נושא חלש - עברי על תרגול דף העבודה לחיזוק.';
+ body.innerHTML='<p style="margin-top:0;color:var(--muted)">סה״כ תרגלת <b>'+totalAtt+'</b> שאלות. הדיוק מחושב לפי הצלחה בניסיון הראשון.</p>'+rows+'<div class="reco">'+advice+'</div><p style="color:var(--muted);font-size:14px">רוצה להראות את ההתקדמות? פשוט הציגי את המסך הזה, או ייצאי לקובץ ושלחי.</p>';
+}
+/* ============ EXPORT / IMPORT / RESET ============ */
+document.getElementById('exportBtn').onclick=()=>{
+ const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='yahasim-progress.json';a.click();URL.revokeObjectURL(a.href);
+};
+document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();
+document.getElementById('importFile').onchange=e=>{
+ const f=e.target.files[0];if(!f)return;
+ const r=new FileReader();
+ r.onload=()=>{try{const d=JSON.parse(r.result);if(d&&typeof d==='object'){state=Object.assign({diagDone:false,diagAnswers:[],stats:{},practiceDone:{}},d);save();renderSummary();renderHomeStats();}}catch(err){alert('הקובץ לא תקין');}};
+ r.readAsText(f);
+};
+document.getElementById('resetBtn').onclick=()=>{
+ if(confirm('לאפס את כל ההתקדמות?')){state={diagDone:false,diagAnswers:[],stats:{},practiceDone:{}};save();renderSummary();renderHomeStats();}
+};
+/* ============ HOME STATS ============ */
+function renderHomeStats(){
+ const el=document.getElementById('homeStats');
+ const totalAtt=ORDER.reduce((t,k)=>t+(state.stats[k]?state.stats[k].att:0),0);
+ const totalOk=ORDER.reduce((t,k)=>t+(state.stats[k]?state.stats[k].firstOk:0),0);
+ const mastered=ORDER.filter(k=>{const s=state.stats[k];return s&&s.att>=2&&s.firstOk/s.att>=0.75;}).length;
+ el.innerHTML='<div class="stat"><b>'+totalAtt+'</b><span>שאלות תורגלו</span></div><div class="stat"><b>'+(totalAtt?Math.round(100*totalOk/totalAtt):0)+'%</b><span>דיוק בניסיון ראשון</span></div><div class="stat"><b>'+mastered+'/6</b><span>מיומנויות בשליטה</span></div><div class="stat"><b>'+(state.diagDone?'✓':'—')+'</b><span>אבחון</span></div>';
+}
+renderHomeStats();
+</script></body></html>
