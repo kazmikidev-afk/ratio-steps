@@ -598,13 +598,13 @@ const LABS={
   ctrl.appendChild(L.el);ctrl.appendChild(sc);ctrl.appendChild(out);
   function draw(){
    const m=+L.input.value;L.labelEl.textContent=m;
-   const k=+sel.value.replace(/[^0-9]/g,'').replace(/^1/,'1')||500;
+   const k=parseInt(sel.value.split(':')[1].replace(/,/g,''),10)||500;
    const cm=m*100, mapCm=cm/k;
    let disp;
    if(mapCm>=100)disp=(mapCm/100).toFixed(2).replace(/\.?0+$/,'')+' מ׳';
    else if(mapCm>=1)disp=(Math.round(mapCm*100)/100)+' ס״מ';
    else disp=(Math.round(mapCm*10)/10)+' מ״מ';
-   stage.innerHTML='<svg viewBox="0 0 400 180"><rect x="20" y="30" width="360" height="26" rx="6" fill="var(--orange)" opacity="0.85"/><text x="200" y="22" text-anchor="middle" font-size="14" fill="var(--ink)">במציאות: '+m+' מ׳</text><rect x="20" y="105" width="'+Math.max(6,Math.min(360,360/k*1))+'" height="26" rx="6" fill="var(--teal)"/><text x="200" y="100" text-anchor="middle" font-size="14" fill="var(--ink)">בתרשים ('+sel.value+'): '+disp+'</text><text x="200" y="165" text-anchor="middle" font-size="12" fill="var(--muted)">אורך הפס הירוק מוקטן פי '+k.toLocaleString()+' (הדמיה)</text></svg>';
+   stage.innerHTML='<svg viewBox="0 0 400 180"><rect x="20" y="30" width="360" height="26" rx="6" fill="var(--orange)" opacity="0.85"/><text x="200" y="22" text-anchor="middle" font-size="14" fill="var(--ink)">במציאות: '+m+' מ׳</text><rect x="20" y="105" width="'+Math.max(6,Math.min(360,mapCm*8))+'" height="26" rx="6" fill="var(--teal)"/><text x="200" y="100" text-anchor="middle" font-size="14" fill="var(--ink)">בתרשים ('+sel.value+'): '+disp+'</text><text x="200" y="165" text-anchor="middle" font-size="12" fill="var(--muted)">אורך הפס הירוק מוקטן פי '+k.toLocaleString()+' (הדמיה לא בפרופורציה)</text></svg>';
    out.innerHTML='<b>שלבי הפתרון:</b><br>1. המרה לס״מ: '+m+' מ׳ = <b>'+cm.toLocaleString()+' ס״מ</b><br>2. חילוק בקנה המידה: '+cm.toLocaleString()+' ÷ '+k.toLocaleString()+' = <b>'+(Math.round(mapCm*100)/100).toLocaleString()+' ס״מ</b><br>3. המרה ליחידה נוחה: <b style="color:var(--teal)">'+disp+'</b>';
   }
   L.input.oninput=draw;sel.onchange=draw;draw();
